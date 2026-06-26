@@ -172,12 +172,10 @@ button:hover{
   <h1>3D Doggy Tag Creator</h1>
   <div class="subtitle">Create premium 3D-printable dog tags in seconds.</div>
 
-  <label>Design</label>
+<label>Design</label>
 <select id="design">
-  <option value="bone-with-rounding.stl">🦴 Rounded Bone</option>
-  <option value="empty-bone.stl">🦴 Classic Bone</option>
-  <option value="simple-tag.stl">🏷️ Simple Tag</option>
-  <option value="simple-heart.stl">❤️ Simple Heart</option>
+    <option value="bone-with-rounding.stl">🦴 Rounded Bone</option>
+    <option value="empty-bone.stl">🦴 Classic Bone</option>
 </select>
 
   <label>Dog name</label>
@@ -401,13 +399,7 @@ function updateModel(){
 
       textMesh=new THREE.Mesh(textGeometry,textMaterial);
 
-if(designFile==="simple-tag.stl"){
-    textMesh.position.set(0,1.5,-0.4);
-}else if(designFile==="simple-heart.stl"){
-    textMesh.position.set(0,2,0);
-}else{
-    textMesh.position.set(0,1.5,-.5);
-}
+textMesh.position.set(0,1.5,-.5);
 
 textMesh.rotation.x=THREE.MathUtils.degToRad(90);
 textMesh.rotation.y=THREE.MathUtils.degToRad(180);
