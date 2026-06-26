@@ -401,7 +401,13 @@ function updateModel(){
 
       textMesh=new THREE.Mesh(textGeometry,textMaterial);
 
-      textMesh.position.set(0,1.5,-.5);
+      if(designFile==="simple-tag.stl"){
+    textMesh.position.set(0,0.8,-.5);
+}else if(designFile==="simple-heart.stl"){
+    textMesh.position.set(0,2.1,-.5);
+}else{
+    textMesh.position.set(0,1.5,-.5);
+}
       textMesh.rotation.x=THREE.MathUtils.degToRad(90);
       textMesh.rotation.y=THREE.MathUtils.degToRad(180);
       textMesh.rotation.z=THREE.MathUtils.degToRad(0);
