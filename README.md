@@ -160,7 +160,8 @@ This project is licensed under the **MIT License**.
 You are free to use, modify and improve this project.
 
 You are NOT allowed to earn any kind of income with these files. youre not allowed to earn income the stl files or html file on this github repository. youre also not allowed to earn income of the generated doggy tags. 
-just dont sell my stuff please :)
+
+Just dont sell my stuff please :)
 
 ---
 
