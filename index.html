@@ -401,16 +401,17 @@ function updateModel(){
 
       textMesh=new THREE.Mesh(textGeometry,textMaterial);
 
-      if(designFile==="simple-tag.stl"){
-    textMesh.position.set(0,0.8,-.5);
+if(designFile==="simple-tag.stl"){
+    textMesh.position.set(0,0.3,-.5);   // lager
 }else if(designFile==="simple-heart.stl"){
-    textMesh.position.set(0,2.1,-.5);
+    textMesh.position.set(0,2.6,-.5);   // hoger
 }else{
-    textMesh.position.set(0,1.5,-.5);
+    textMesh.position.set(0,1.5,-.5);   // bone modellen
 }
-      textMesh.rotation.x=THREE.MathUtils.degToRad(90);
-      textMesh.rotation.y=THREE.MathUtils.degToRad(180);
-      textMesh.rotation.z=THREE.MathUtils.degToRad(0);
+
+textMesh.rotation.x=THREE.MathUtils.degToRad(90);
+textMesh.rotation.y=THREE.MathUtils.degToRad(180);
+textMesh.rotation.z=THREE.MathUtils.degToRad(0);
 
       scene.add(textMesh);
 
