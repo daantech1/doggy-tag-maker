@@ -105,7 +105,6 @@ Open the URL
 https://daantech1.github.io/doggy-tag-maker/
 ```
 
-or host it using **GitHub Pages**.
 
 ---
 
