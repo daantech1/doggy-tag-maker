@@ -3,25 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <title>Doggy Tag Maker</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"}}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;height:100vh;overflow:hidden;font-family:Arial,sans-serif;display:flex;background:radial-gradient(circle at top right,#fff4df,#f7dfbd 45%,#d99b57);color:#2d1b10}
-#panel{width:340px;padding:24px;background:linear-gradient(180deg,#fffaf1,#ffe3bd);border-right:5px solid #d87b25;box-shadow:10px 0 35px #0002;z-index:10}
-#madeNL{position:fixed;top:12px;left:360px;width:82px;background:#fffaf1;border:1px solid #d87b25;border-radius:9px;padding:5px;text-align:center;box-shadow:0 4px 12px #0002;z-index:20}
-#madeNL img{width:100%;border-radius:4px;display:block;margin-bottom:4px}#madeNL div{font-size:7px;font-weight:900;line-height:1.05;letter-spacing:.25px}
-h1{font-size:30px;margin:0 0 8px}.subtitle{font-size:14px;color:#704c2d;margin-bottom:22px}.paw{font-size:31px;margin-bottom:8px}
-label{display:block;margin-top:15px;font-weight:900;font-size:14px}input,select{width:100%;padding:12px;margin-top:7px;border-radius:13px;border:2px solid #eda85d;background:white;font-size:15px;outline:none}
-input:focus,select:focus{border-color:#ff6b1a}.row{display:flex;align-items:center;gap:8px;margin-top:12px;font-weight:900}.row input{width:auto;margin:0}
-button{width:100%;margin-top:14px;padding:14px;border:0;border-radius:15px;font-size:15px;font-weight:900;cursor:pointer}
-#previewBtn{background:linear-gradient(135deg,#ffbf4b,#ff8d1a);color:#2d1b10}#downloadBtn{background:linear-gradient(135deg,#55b957,#23963c);color:white}
-button:hover{transform:translateY(-1px);filter:brightness(1.04)}#status{margin-top:16px;padding:12px;border-radius:13px;background:#fff2df;font-size:13px;color:#5c3a21}
-#viewer{flex:1;position:relative}.badge{font-size:12px;margin-top:16px;color:#704c2d;text-align:center;font-weight:900}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  display:flex;
+  background:linear-gradient(135deg,#ffe7d1,#fff7ed);
+  color:#3b2a1f;
+}
+
+#madeNL{
+  position:fixed;
+  top:12px;
+  left:350px;
+  z-index:20;
+  width:82px;
+  background:#fff8ef;
+  border:1px solid #f6b26b;
+  border-radius:8px;
+  padding:5px;
+  text-align:center;
+  box-shadow:0 3px 8px rgba(0,0,0,.15);
+}
+
+#madeNL img{
+  width:100%;
+  height:auto;
+  border-radius:4px;
+  display:block;
+  margin-bottom:4px;
+}
+
+#madeNL div{
+  font-size:7px;
+  font-weight:bold;
+  color:#3b2a1f;
+  letter-spacing:.3px;
+  line-height:1.1;
+}
+
+#panel{
+  width:330px;
+  padding:22px;
+  background:#fff8ef;
+  border-right:4px solid #f6b26b;
+  box-shadow:8px 0 25px rgba(0,0,0,.12);
+  z-index:10;
+}
+
+h1{
+  margin:0 0 6px;
+  font-size:28px;
+}
+
+.subtitle{
+  margin-bottom:22px;
+  font-size:14px;
+  color:#7a5c43;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+input,select{
+  width:100%;
+  padding:11px;
+  margin-top:7px;
+  border-radius:12px;
+  border:2px solid #f3c38b;
+  background:white;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:#ff8c42;
+}
+
+.checkboxRow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.checkboxRow input{
+  width:auto;
+  margin:0;
+}
+
+button{
+  width:100%;
+  margin-top:13px;
+  padding:13px;
+  border:none;
+  border-radius:14px;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+}
+
+#previewBtn{
+  background:#ffb347;
+  color:#3b2a1f;
+}
+
+#downloadBtn{
+  background:#4caf50;
+  color:white;
+}
+
+button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.04);
+}
+
+#status{
+  margin-top:16px;
+  padding:12px;
+  border-radius:12px;
+  background:#fff0dc;
+  font-size:13px;
+  color:#5c4633;
+}
+
+#viewer{
+  flex:1;
+  position:relative;
+}
+
+.paw{
+  font-size:32px;
+  margin-bottom:8px;
+}
 </style>
 </head>
+
 <body>
 
-<div id="madeNL"><img src="dutch-flag.jpg" alt="Dutch flag"><div>MADE IN THE NETHERLANDS</div></div>
+<div id="madeNL">
+  <img src="dutch-flag.jpg" alt="Dutch flag">
+  <div>MADE IN THE NETHERLANDS</div>
+</div>
 
 <div id="panel">
   <div class="paw">🐶 🐾</div>
@@ -35,42 +178,49 @@ button:hover{transform:translateY(-1px);filter:brightness(1.04)}#status{margin-t
   </select>
 
   <label>Dog name</label>
-  <input id="dogName" value="JACK">
+  <input id="dogName" value="Bobby">
 
   <label>Font</label>
   <select id="fontSelect">
     <option value="helvetiker">Helvetiker</option>
     <option value="optimer">Optimer</option>
     <option value="gentilis">Gentilis</option>
-    <option value="changa">Changa One</option>
   </select>
 
-  <div class="row"><input id="boldText" type="checkbox" checked><span>Bold text</span></div>
+  <div class="checkboxRow">
+    <input id="boldText" type="checkbox">
+    <span>Bold text</span>
+  </div>
 
   <label>Text size</label>
-  <input id="textSize" type="number" value="14" step="0.5">
+  <input id="textSize" type="number" value="8" step="0.5">
+
+  <label>Text thickness</label>
+  <input id="textHeight" type="number" value="1.8" step="0.1">
 
   <button id="previewBtn">🐾 Update preview</button>
   <button id="downloadBtn">⬇ Download STL</button>
 
   <div id="status">Loading...</div>
-  <div class="badge">Custom 3D dog tags</div>
 </div>
 
 <div id="viewer"></div>
 
 <script type="module">
-import*as THREE from"three";
-import{STLLoader}from"three/addons/loaders/STLLoader.js";
-import{STLExporter}from"three/addons/exporters/STLExporter.js";
-import{OrbitControls}from"three/addons/controls/OrbitControls.js";
-import{FontLoader}from"three/addons/loaders/FontLoader.js";
-import{TextGeometry}from"three/addons/geometries/TextGeometry.js";
+import * as THREE from "three";
+import { STLLoader } from "three/addons/loaders/STLLoader.js";
+import { STLExporter } from "three/addons/exporters/STLExporter.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { FontLoader } from "three/addons/loaders/FontLoader.js";
+import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 
-let scene,camera,renderer,controls,tagMesh=null,textMesh=null,font=null,fontKey="";
-const $=id=>document.getElementById(id),status=$("status");
+let scene,camera,renderer,controls;
+let tagMesh=null,textMesh=null,font=null;
+let currentFontKey="";
 
-const fonts={
+const status=document.getElementById("status");
+
+const fontUrls={
   helvetiker:{
     regular:"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/helvetiker_regular.typeface.json",
     bold:"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/helvetiker_bold.typeface.json"
@@ -82,149 +232,229 @@ const fonts={
   gentilis:{
     regular:"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/gentilis_regular.typeface.json",
     bold:"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/gentilis_bold.typeface.json"
-  },
-  changa:{
-    regular:"changa-one.typeface.json",
-    bold:"changa-one.typeface.json"
   }
 };
 
-$("previewBtn").onclick=updateModel;
-$("downloadBtn").onclick=downloadSTL;
-$("design").onchange=updateModel;
-$("dogName").oninput=updateModel;
-$("fontSelect").onchange=loadFont;
-$("boldText").onchange=loadFont;
+document.getElementById("previewBtn").addEventListener("click",updateModel);
+document.getElementById("downloadBtn").addEventListener("click",downloadSTL);
+document.getElementById("design").addEventListener("change",updateModel);
+document.getElementById("dogName").addEventListener("input",updateModel);
+document.getElementById("fontSelect").addEventListener("change",loadSelectedFont);
+document.getElementById("boldText").addEventListener("change",loadSelectedFont);
 
 init();
 
 function init(){
-  const v=$("viewer");
-  scene=new THREE.Scene();
-  scene.background=new THREE.Color(0xfff1df);
+  const viewer=document.getElementById("viewer");
 
-  camera=new THREE.PerspectiveCamera(45,v.clientWidth/v.clientHeight,.1,2000);
-  camera.position.set(0,-100,0);
-  camera.up.set(0,0,1);
+  scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xfff4e8);
+
+  camera=new THREE.PerspectiveCamera(
+    45,
+    viewer.clientWidth/viewer.clientHeight,
+    .1,
+    2000
+  );
+
+  camera.position.set(0,100,0);
 
   renderer=new THREE.WebGLRenderer({antialias:true});
-  renderer.setSize(v.clientWidth,v.clientHeight);
-  renderer.setPixelRatio(devicePixelRatio);
-  v.appendChild(renderer.domElement);
+  renderer.setSize(viewer.clientWidth,viewer.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  viewer.appendChild(renderer.domElement);
 
   controls=new OrbitControls(camera,renderer.domElement);
   controls.enableDamping=true;
   controls.target.set(0,0,0);
   controls.update();
 
-  scene.add(new THREE.AmbientLight(0xffffff,.9));
+  scene.add(new THREE.AmbientLight(0xffffff,.85));
 
-  const l1=new THREE.DirectionalLight(0xffffff,1.15);
-  l1.position.set(40,-60,90);
-  scene.add(l1);
+  const light=new THREE.DirectionalLight(0xffffff,1.1);
+  light.position.set(40,-50,90);
+  scene.add(light);
 
-  const l2=new THREE.DirectionalLight(0xffcc99,.55);
-  l2.position.set(-70,40,70);
-  scene.add(l2);
+  const secondLight=new THREE.DirectionalLight(0xffcc99,.5);
+  secondLight.position.set(-60,40,60);
+  scene.add(secondLight);
 
-  loadFont();
-  addEventListener("resize",resizeViewer);
+  loadSelectedFont();
+
+  window.addEventListener("resize",resizeViewer);
   animate();
 }
 
-function loadFont(){
-  const fam=$("fontSelect").value,weight=$("boldText").checked?"bold":"regular",key=fam+"-"+weight;
-  if(key===fontKey&&font){updateModel();return}
-  fontKey=key;
+function loadSelectedFont(){
+  const family=document.getElementById("fontSelect").value;
+  const bold=document.getElementById("boldText").checked;
+  const weight=bold?"bold":"regular";
+  const key=family+"-"+weight;
+
+  if(key===currentFontKey && font){
+    updateModel();
+    return;
+  }
+
+  currentFontKey=key;
   status.textContent="Loading font...";
-  new FontLoader().load(fonts[fam][weight],f=>{font=f;updateModel()},undefined,e=>{
-    status.textContent=fam==="changa"?"Missing changa-one.typeface.json file.":"Font could not be loaded.";
-    console.error(e);
-  });
+
+  new FontLoader().load(
+    fontUrls[family][weight],
+    function(loadedFont){
+      font=loadedFont;
+      updateModel();
+    },
+    undefined,
+    function(error){
+      status.textContent="Font could not be loaded.";
+      console.error(error);
+    }
+  );
 }
 
-function makeText(t,s,h){
-  const b=$("boldText").checked;
-  return new TextGeometry(t,{
+function createTextGeometry(text,size,height){
+  const isBold=document.getElementById("boldText").checked;
+
+  return new TextGeometry(text,{
     font:font,
-    size:s,
-    height:h,
+    size:size,
+    height:height,
     curveSegments:12,
     bevelEnabled:true,
-    bevelThickness:b?.22:.15,
-    bevelSize:b?.13:.08,
+    bevelThickness:isBold ? .22 : .15,
+    bevelSize:isBold ? .13 : .08,
     bevelSegments:2
   });
 }
 
 function updateModel(){
-  if(!font){status.textContent="Loading font...";return}
+  if(!font){
+    status.textContent="Loading font...";
+    return;
+  }
+
   status.textContent="Loading model...";
 
-  const name=$("dogName").value.trim()||"DOG",file=$("design").value;
-  let size=parseFloat($("textSize").value)||14,height=1.8;
+  const designFile=document.getElementById("design").value;
+  const dogName=document.getElementById("dogName").value.trim()||"DOG";
+  let textSize=parseFloat(document.getElementById("textSize").value)||8;
+  let textHeight=parseFloat(document.getElementById("textHeight").value)||1.8;
 
-  if(tagMesh){scene.remove(tagMesh);tagMesh.geometry.dispose()}
-  if(textMesh){scene.remove(textMesh);textMesh.geometry.dispose()}
+  if(tagMesh){
+    scene.remove(tagMesh);
+    tagMesh.geometry.dispose();
+  }
 
-  new STLLoader().load(file,g=>{
-    g.center();g.computeBoundingBox();
-    const maxW=(g.boundingBox.max.x-g.boundingBox.min.x)*.62;
+  if(textMesh){
+    scene.remove(textMesh);
+    textMesh.geometry.dispose();
+  }
 
-    tagMesh=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0x9a713e,roughness:.42,metalness:.05}));
-    tagMesh.rotation.x=-Math.PI/2;
-    scene.add(tagMesh);
+  const loader=new STLLoader();
 
-    let cur=size,tg=makeText(name,cur,height);
-    tg.computeBoundingBox();
-    let w=tg.boundingBox.max.x-tg.boundingBox.min.x;
+  loader.load(
+    designFile,
+    function(geometry){
+      geometry.center();
+      geometry.computeBoundingBox();
 
-    while(w>maxW&&cur>2){
-      cur-=.25;tg.dispose();
-      tg=makeText(name,cur,height);
-      tg.computeBoundingBox();
-      w=tg.boundingBox.max.x-tg.boundingBox.min.x;
+      const tagWidth=geometry.boundingBox.max.x-geometry.boundingBox.min.x;
+      const maxTextWidth=tagWidth*.62;
+
+      const tagMaterial=new THREE.MeshStandardMaterial({
+        color:0xf2c078,
+        roughness:.42,
+        metalness:.05
+      });
+
+      tagMesh=new THREE.Mesh(geometry,tagMaterial);
+      tagMesh.rotation.x=-Math.PI/2;
+      scene.add(tagMesh);
+
+      let currentSize=textSize;
+      let textGeometry=createTextGeometry(dogName,currentSize,textHeight);
+      textGeometry.computeBoundingBox();
+
+      let textWidth=textGeometry.boundingBox.max.x-textGeometry.boundingBox.min.x;
+
+      while(textWidth>maxTextWidth && currentSize>2){
+        currentSize-=.25;
+        textGeometry.dispose();
+
+        textGeometry=createTextGeometry(dogName,currentSize,textHeight);
+        textGeometry.computeBoundingBox();
+
+        textWidth=textGeometry.boundingBox.max.x-textGeometry.boundingBox.min.x;
+      }
+
+      textGeometry.center();
+
+      const textMaterial=new THREE.MeshStandardMaterial({
+        color:0x5a3217,
+        roughness:.35,
+        metalness:.05
+      });
+
+      textMesh=new THREE.Mesh(textGeometry,textMaterial);
+
+      textMesh.position.set(0,1.5,-.5);
+      textMesh.rotation.x=THREE.MathUtils.degToRad(90);
+      textMesh.rotation.y=THREE.MathUtils.degToRad(180);
+      textMesh.rotation.z=THREE.MathUtils.degToRad(0);
+
+      scene.add(textMesh);
+
+      camera.position.set(0,100,0);
+      controls.target.set(0,0,0);
+      controls.update();
+
+      status.textContent="Preview ready 🐾";
+    },
+    undefined,
+    function(error){
+      status.textContent="STL could not be loaded. Check the exact file name.";
+      console.error(error);
     }
-
-    tg.center();
-
-    textMesh=new THREE.Mesh(tg,new THREE.MeshStandardMaterial({color:0x321500,roughness:.35,metalness:.05}));
-    textMesh.position.set(0,1.5,-.5);
-    textMesh.rotation.x=THREE.MathUtils.degToRad(90);
-    textMesh.rotation.y=THREE.MathUtils.degToRad(0);
-    textMesh.rotation.z=THREE.MathUtils.degToRad(0);
-    scene.add(textMesh);
-
-    camera.position.set(0,-100,0);
-    camera.up.set(0,0,1);
-    controls.target.set(0,0,0);
-    controls.update();
-
-    status.textContent="Preview ready 🐾";
-  },undefined,e=>{
-    status.textContent="STL could not be loaded. Check the exact file name.";
-    console.error(e);
-  });
+  );
 }
 
 function downloadSTL(){
-  if(!tagMesh||!textMesh){status.textContent="Create a preview first.";return}
-  const ex=new THREE.Scene();
-  ex.add(tagMesh.clone(),textMesh.clone());
-  const stl=new STLExporter().parse(ex);
-  const n=($("dogName").value.trim()||"dog").replace(/[^a-z0-9]/gi,"_").toLowerCase();
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([stl],{type:"text/plain"}));
-  a.download="doggy-tag-"+n+".stl";
-  document.body.appendChild(a);a.click();a.remove();
+  if(!tagMesh||!textMesh){
+    status.textContent="Create a preview first.";
+    return;
+  }
+
+  const exportScene=new THREE.Scene();
+
+  exportScene.add(tagMesh.clone());
+  exportScene.add(textMesh.clone());
+
+  const exporter=new STLExporter();
+  const stlString=exporter.parse(exportScene);
+
+  const dogName=document.getElementById("dogName").value.trim()||"dog";
+  const safeName=dogName.replace(/[^a-z0-9]/gi,"_").toLowerCase();
+
+  const blob=new Blob([stlString],{type:"text/plain"});
+  const link=document.createElement("a");
+
+  link.href=URL.createObjectURL(blob);
+  link.download="doggy-tag-"+safeName+".stl";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
   status.textContent="STL downloaded ✅";
 }
 
 function resizeViewer(){
-  const v=$("viewer");
-  camera.aspect=v.clientWidth/v.clientHeight;
+  const viewer=document.getElementById("viewer");
+
+  camera.aspect=viewer.clientWidth/viewer.clientHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(v.clientWidth,v.clientHeight);
+
+  renderer.setSize(viewer.clientWidth,viewer.clientHeight);
 }
 
 function animate(){
