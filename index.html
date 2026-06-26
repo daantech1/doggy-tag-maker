@@ -259,7 +259,7 @@ function init(){
   );
 
   camera.position.set(0,100,0);
-
+  scene.background=new THREE.Color(0x07111f);
   renderer=new THREE.WebGLRenderer({antialias:true});
   renderer.setSize(viewer.clientWidth,viewer.clientHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
