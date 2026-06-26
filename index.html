@@ -3,55 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <title>Doggy Tag Maker</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    #panel {
-      width: 300px;
-      padding: 18px;
-      background: #f3f3f3;
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <style>
+    * {
       box-sizing: border-box;
     }
 
-    #viewer {
-      flex: 1;
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      display: flex;
+      background: linear-gradient(135deg, #ffe7d1, #fff7ed);
+      color: #3b2a1f;
+    }
+
+    #panel {
+      width: 330px;
+      padding: 22px;
+      background: #fff8ef;
+      border-right: 4px solid #f6b26b;
+      box-shadow: 8px 0 25px rgba(0,0,0,0.12);
+      z-index: 10;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      margin-bottom: 22px;
+      font-size: 14px;
+      color: #7a5c43;
     }
 
     label {
       display: block;
-      margin-top: 14px;
+      margin-top: 15px;
       font-weight: bold;
+      font-size: 14px;
     }
 
-    input, select, button {
+    input, select {
       width: 100%;
-      padding: 9px;
+      padding: 11px;
       margin-top: 7px;
-      box-sizing: border-box;
+      border-radius: 12px;
+      border: 2px solid #f3c38b;
+      background: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #ff8c42;
     }
 
     button {
-      cursor: pointer;
+      width: 100%;
+      margin-top: 13px;
+      padding: 13px;
+      border: none;
+      border-radius: 14px;
       font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #previewBtn {
+      background: #ffb347;
+      color: #3b2a1f;
+    }
+
+    #downloadBtn {
+      background: #4caf50;
+      color: white;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
     }
 
     #status {
-      margin-top: 14px;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #fff0dc;
       font-size: 13px;
-      color: #333;
+      color: #5c4633;
+    }
+
+    #viewer {
+      flex: 1;
+      position: relative;
+    }
+
+    #viewer::after {
+      content: "🐾 Doggy Tag Maker";
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      font-weight: bold;
+      color: rgba(80, 50, 30, 0.35);
+      pointer-events: none;
+    }
+
+    .paw {
+      font-size: 32px;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 
 <body>
   <div id="panel">
-    <h2>Doggy Tag Maker</h2>
+    <div class="paw">🐶 🐾</div>
+    <h1>Doggy Tag Maker</h1>
+    <div class="subtitle">Maak simpel een hondenpenning met naam</div>
 
     <label>Design</label>
     <select id="design">
@@ -59,20 +140,20 @@
       <option value="empty-bone.stl">Empty bone</option>
     </select>
 
-    <label>Naam</label>
+    <label>Naam hond</label>
     <input id="dogName" value="Bobby" />
 
     <label>Tekstgrootte</label>
     <input id="textSize" type="number" value="8" step="0.5" />
 
-    <label>Teksthoogte</label>
+    <label>Dikte tekst</label>
     <input id="textHeight" type="number" value="1.8" step="0.1" />
 
-    <label>Tekst omhoog/omlaag</label>
+    <label>Tekst omhoog / omlaag</label>
     <input id="textY" type="number" value="0" step="1" />
 
-    <button id="previewBtn">Preview bijwerken</button>
-    <button id="downloadBtn">Download STL</button>
+    <button id="previewBtn">🐾 Preview bijwerken</button>
+    <button id="downloadBtn">⬇ Download STL</button>
 
     <div id="status">Laden...</div>
   </div>
@@ -80,12 +161,12 @@
   <div id="viewer"></div>
 
   <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js";
-    import { STLLoader } from "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/loaders/STLLoader.js";
-    import { STLExporter } from "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/exporters/STLExporter.js";
-    import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/controls/OrbitControls.js";
-    import { FontLoader } from "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/loaders/FontLoader.js";
-    import { TextGeometry } from "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/geometries/TextGeometry.js";
+    import * as THREE from "three";
+    import { STLLoader } from "three/addons/loaders/STLLoader.js";
+    import { STLExporter } from "three/addons/exporters/STLExporter.js";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+    import { FontLoader } from "three/addons/loaders/FontLoader.js";
+    import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 
     let scene, camera, renderer, controls;
     let tagMesh = null;
@@ -97,6 +178,7 @@
     document.getElementById("previewBtn").addEventListener("click", updateModel);
     document.getElementById("downloadBtn").addEventListener("click", downloadSTL);
     document.getElementById("design").addEventListener("change", updateModel);
+    document.getElementById("dogName").addEventListener("input", updateModel);
 
     init();
 
@@ -104,7 +186,7 @@
       const viewer = document.getElementById("viewer");
 
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xffffff);
+      scene.background = new THREE.Color(0xfff4e8);
 
       camera = new THREE.PerspectiveCamera(
         45,
@@ -112,20 +194,26 @@
         0.1,
         2000
       );
+
       camera.position.set(0, -90, 70);
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(viewer.clientWidth, viewer.clientHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
       viewer.appendChild(renderer.domElement);
 
       controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
 
-      const light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(40, -50, 80);
+      const light = new THREE.DirectionalLight(0xffffff, 1.1);
+      light.position.set(40, -50, 90);
       scene.add(light);
+
+      const secondLight = new THREE.DirectionalLight(0xffcc99, 0.5);
+      secondLight.position.set(-60, 40, 60);
+      scene.add(secondLight);
 
       new FontLoader().load(
         "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/helvetiker_regular.typeface.json",
@@ -176,8 +264,9 @@
           geometry.center();
 
           const tagMaterial = new THREE.MeshStandardMaterial({
-            color: 0xd8d8d8,
-            roughness: 0.45
+            color: 0xf2c078,
+            roughness: 0.42,
+            metalness: 0.05
           });
 
           tagMesh = new THREE.Mesh(geometry, tagMaterial);
@@ -189,25 +278,29 @@
             size: textSize,
             height: textHeight,
             curveSegments: 12,
-            bevelEnabled: false
+            bevelEnabled: true,
+            bevelThickness: 0.15,
+            bevelSize: 0.08,
+            bevelSegments: 2
           });
 
           textGeometry.center();
 
           const textMaterial = new THREE.MeshStandardMaterial({
-            color: 0x222222,
-            roughness: 0.4
+            color: 0x5a3217,
+            roughness: 0.35,
+            metalness: 0.05
           });
 
           textMesh = new THREE.Mesh(textGeometry, textMaterial);
           textMesh.position.set(0, textY, 3);
           scene.add(textMesh);
 
-          status.textContent = "Preview klaar.";
+          status.textContent = "Preview klaar 🐾";
         },
         undefined,
         function (error) {
-          status.textContent = "STL kon niet laden. Check bestandsnaam.";
+          status.textContent = "STL kon niet laden. Check of de bestandsnaam exact klopt.";
           console.error(error);
         }
       );
@@ -220,8 +313,12 @@
       }
 
       const exportScene = new THREE.Scene();
-      exportScene.add(tagMesh.clone());
-      exportScene.add(textMesh.clone());
+
+      const tagClone = tagMesh.clone();
+      const textClone = textMesh.clone();
+
+      exportScene.add(tagClone);
+      exportScene.add(textClone);
 
       const exporter = new STLExporter();
       const stlString = exporter.parse(exportScene);
@@ -231,17 +328,22 @@
 
       const blob = new Blob([stlString], { type: "text/plain" });
       const link = document.createElement("a");
+
       link.href = URL.createObjectURL(blob);
       link.download = "doggy-tag-" + safeName + ".stl";
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
 
-      status.textContent = "STL gedownload.";
+      status.textContent = "STL gedownload ✅";
     }
 
     function resizeViewer() {
       const viewer = document.getElementById("viewer");
+
       camera.aspect = viewer.clientWidth / viewer.clientHeight;
       camera.updateProjectionMatrix();
+
       renderer.setSize(viewer.clientWidth, viewer.clientHeight);
     }
 
