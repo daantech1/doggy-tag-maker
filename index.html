@@ -15,9 +15,7 @@
   </script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -146,7 +144,7 @@
     <label>Tekstgrootte</label>
     <input id="textSize" type="number" value="8" step="0.5" />
 
-    <label>Dikte tekst</label>
+    <label>Dikte tekst max 1.8 mm</label>
     <input id="textHeight" type="number" value="1.8" step="0.1" />
 
     <button id="previewBtn">🐾 Preview bijwerken</button>
@@ -229,6 +227,19 @@
       animate();
     }
 
+    function createTextGeometry(text, size, height) {
+      return new TextGeometry(text, {
+        font: font,
+        size: size,
+        height: height,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.15,
+        bevelSize: 0.08,
+        bevelSegments: 2
+      });
+    }
+
     function updateModel() {
       if (!font) {
         status.textContent = "Font laden...";
@@ -239,8 +250,12 @@
 
       const designFile = document.getElementById("design").value;
       const dogName = document.getElementById("dogName").value.trim() || "DOG";
-      const textSize = parseFloat(document.getElementById("textSize").value) || 8;
-      const textHeight = parseFloat(document.getElementById("textHeight").value) || 1.8;
+
+      let textSize = parseFloat(document.getElementById("textSize").value) || 8;
+      let textHeight = parseFloat(document.getElementById("textHeight").value) || 1.8;
+
+      textHeight = Math.min(textHeight, 1.8);
+      document.getElementById("textHeight").value = textHeight;
 
       if (tagMesh) {
         scene.remove(tagMesh);
@@ -258,6 +273,12 @@
         designFile,
         function (geometry) {
           geometry.center();
+          geometry.computeBoundingBox();
+
+          const tagWidth =
+            geometry.boundingBox.max.x - geometry.boundingBox.min.x;
+
+          const maxTextWidth = tagWidth * 0.62;
 
           const tagMaterial = new THREE.MeshStandardMaterial({
             color: 0xf2c078,
@@ -269,16 +290,23 @@
           tagMesh.rotation.x = -Math.PI / 2;
           scene.add(tagMesh);
 
-          const textGeometry = new TextGeometry(dogName, {
-            font: font,
-            size: textSize,
-            height: textHeight,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.15,
-            bevelSize: 0.08,
-            bevelSegments: 2
-          });
+          let currentSize = textSize;
+          let textGeometry = createTextGeometry(dogName, currentSize, textHeight);
+          textGeometry.computeBoundingBox();
+
+          let textWidth =
+            textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
+
+          while (textWidth > maxTextWidth && currentSize > 2) {
+            currentSize -= 0.25;
+            textGeometry.dispose();
+
+            textGeometry = createTextGeometry(dogName, currentSize, textHeight);
+            textGeometry.computeBoundingBox();
+
+            textWidth =
+              textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
+          }
 
           textGeometry.center();
 
