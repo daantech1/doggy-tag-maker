@@ -144,7 +144,7 @@
     <label>Tekstgrootte</label>
     <input id="textSize" type="number" value="8" step="0.5" />
 
-    <label>Dikte tekst max 1.8 mm</label>
+    <label>Dikte tekst</label>
     <input id="textHeight" type="number" value="1.8" step="0.1" />
 
     <button id="previewBtn">🐾 Preview bijwerken</button>
@@ -190,7 +190,7 @@
         2000
       );
 
-      camera.position.set(0, -90, 70);
+      camera.position.set(0, 0, 100);
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(viewer.clientWidth, viewer.clientHeight);
@@ -199,6 +199,8 @@
 
       controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
+      controls.target.set(0, 0, 0);
+      controls.update();
 
       scene.add(new THREE.AmbientLight(0xffffff, 0.85));
 
@@ -253,9 +255,6 @@
 
       let textSize = parseFloat(document.getElementById("textSize").value) || 8;
       let textHeight = parseFloat(document.getElementById("textHeight").value) || 1.8;
-
-      textHeight = Math.min(textHeight, 1.8);
-      document.getElementById("textHeight").value = textHeight;
 
       if (tagMesh) {
         scene.remove(tagMesh);
@@ -324,6 +323,10 @@
           textMesh.rotation.z = THREE.MathUtils.degToRad(0);
 
           scene.add(textMesh);
+
+          camera.position.set(0, 0, 100);
+          controls.target.set(0, 0, 0);
+          controls.update();
 
           status.textContent = "Preview klaar 🐾";
         },
