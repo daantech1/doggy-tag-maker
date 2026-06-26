@@ -96,18 +96,13 @@ No software installation required.
 
 ---
 
-# 📦 Installation
+# 📦 Use
 
-Clone the repository
 
-```bash
-git clone https://github.com/daan-tech1/3D-Doggy-Tag-Creator.git
-```
-
-Open
+Open the URL
 
 ```text
-index.html
+https://daantech1.github.io/doggy-tag-maker/
 ```
 
 or host it using **GitHub Pages**.
