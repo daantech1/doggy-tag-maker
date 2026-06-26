@@ -2,8 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>Doggy Tag Maker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doggy Tag Rotation Test</title>
 
   <script type="importmap">
   {
@@ -15,124 +14,57 @@
   </script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
       display: flex;
-      background: linear-gradient(135deg, #ffe7d1, #fff7ed);
-      color: #3b2a1f;
+      height: 100vh;
+      font-family: Arial;
+      background: #fff4e8;
     }
 
     #panel {
-      width: 330px;
-      padding: 22px;
+      width: 340px;
+      padding: 20px;
       background: #fff8ef;
       border-right: 4px solid #f6b26b;
-      box-shadow: 8px 0 25px rgba(0,0,0,0.12);
-      z-index: 10;
-    }
-
-    h1 {
-      margin: 0 0 6px;
-      font-size: 28px;
-    }
-
-    .subtitle {
-      margin-bottom: 22px;
-      font-size: 14px;
-      color: #7a5c43;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 11px;
-      margin-top: 7px;
-      border-radius: 12px;
-      border: 2px solid #f3c38b;
-      background: white;
-      font-size: 15px;
-      outline: none;
-    }
-
-    input:focus, select:focus {
-      border-color: #ff8c42;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 13px;
-      padding: 13px;
-      border: none;
-      border-radius: 14px;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    #previewBtn {
-      background: #ffb347;
-      color: #3b2a1f;
-    }
-
-    #downloadBtn {
-      background: #4caf50;
-      color: white;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
-    }
-
-    #status {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 12px;
-      background: #fff0dc;
-      font-size: 13px;
-      color: #5c4633;
+      overflow: auto;
     }
 
     #viewer {
       flex: 1;
-      position: relative;
     }
 
-    #viewer::after {
-      content: "🐾 Doggy Tag Maker";
-      position: absolute;
-      right: 22px;
-      bottom: 18px;
+    label {
+      display: block;
+      margin-top: 12px;
       font-weight: bold;
-      color: rgba(80, 50, 30, 0.35);
-      pointer-events: none;
     }
 
-    .paw {
-      font-size: 32px;
-      margin-bottom: 8px;
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      height: 150px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
   <div id="panel">
-    <div class="paw">🐶 🐾</div>
-    <h1>Doggy Tag Maker</h1>
-    <div class="subtitle">Maak simpel een hondenpenning met naam</div>
+    <h2>Rotation Test</h2>
 
     <label>Design</label>
     <select id="design">
@@ -140,22 +72,34 @@
       <option value="empty-bone.stl">Empty bone</option>
     </select>
 
-    <label>Naam hond</label>
+    <label>Naam</label>
     <input id="dogName" value="Bobby" />
 
     <label>Tekstgrootte</label>
     <input id="textSize" type="number" value="8" step="0.5" />
 
-    <label>Dikte tekst</label>
-    <input id="textHeight" type="number" value="1.8" step="0.1" />
+    <label>Tekst X positie</label>
+    <input id="posX" type="number" value="0" step="0.5" />
 
-    <label>Tekst omhoog / omlaag</label>
-    <input id="textY" type="number" value="0" step="1" />
+    <label>Tekst Y positie</label>
+    <input id="posY" type="number" value="0" step="0.5" />
 
-    <button id="previewBtn">🐾 Preview bijwerken</button>
-    <button id="downloadBtn">⬇ Download STL</button>
+    <label>Tekst Z hoogte</label>
+    <input id="posZ" type="number" value="3" step="0.5" />
 
-    <div id="status">Laden...</div>
+    <label>Rotatie X graden</label>
+    <input id="rotX" type="number" value="0" step="5" />
+
+    <label>Rotatie Y graden</label>
+    <input id="rotY" type="number" value="0" step="5" />
+
+    <label>Rotatie Z graden</label>
+    <input id="rotZ" type="number" value="0" step="5" />
+
+    <button id="updateBtn">Update preview</button>
+
+    <label>Code voor mij</label>
+    <textarea id="codeOutput" readonly></textarea>
   </div>
 
   <div id="viewer"></div>
@@ -163,7 +107,6 @@
   <script type="module">
     import * as THREE from "three";
     import { STLLoader } from "three/addons/loaders/STLLoader.js";
-    import { STLExporter } from "three/addons/exporters/STLExporter.js";
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
     import { FontLoader } from "three/addons/loaders/FontLoader.js";
     import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
@@ -173,12 +116,18 @@
     let textMesh = null;
     let font = null;
 
-    const status = document.getElementById("status");
+    const inputs = [
+      "design", "dogName", "textSize",
+      "posX", "posY", "posZ",
+      "rotX", "rotY", "rotZ"
+    ];
 
-    document.getElementById("previewBtn").addEventListener("click", updateModel);
-    document.getElementById("downloadBtn").addEventListener("click", downloadSTL);
-    document.getElementById("design").addEventListener("change", updateModel);
-    document.getElementById("dogName").addEventListener("input", updateModel);
+    inputs.forEach(id => {
+      document.getElementById(id).addEventListener("input", updateModel);
+      document.getElementById(id).addEventListener("change", updateModel);
+    });
+
+    document.getElementById("updateBtn").addEventListener("click", updateModel);
 
     init();
 
@@ -194,7 +143,6 @@
         0.1,
         2000
       );
-
       camera.position.set(0, -90, 70);
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -211,20 +159,11 @@
       light.position.set(40, -50, 90);
       scene.add(light);
 
-      const secondLight = new THREE.DirectionalLight(0xffcc99, 0.5);
-      secondLight.position.set(-60, 40, 60);
-      scene.add(secondLight);
-
       new FontLoader().load(
         "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/helvetiker_regular.typeface.json",
         function (loadedFont) {
           font = loadedFont;
           updateModel();
-        },
-        undefined,
-        function (error) {
-          status.textContent = "Font kon niet laden.";
-          console.error(error);
         }
       );
 
@@ -233,121 +172,73 @@
     }
 
     function updateModel() {
-      if (!font) {
-        status.textContent = "Font laden...";
-        return;
-      }
-
-      status.textContent = "Model laden...";
+      if (!font) return;
 
       const designFile = document.getElementById("design").value;
       const dogName = document.getElementById("dogName").value.trim() || "DOG";
       const textSize = parseFloat(document.getElementById("textSize").value) || 8;
-      const textHeight = parseFloat(document.getElementById("textHeight").value) || 1.8;
-      const textY = parseFloat(document.getElementById("textY").value) || 0;
 
-      if (tagMesh) {
-        scene.remove(tagMesh);
-        tagMesh.geometry.dispose();
-      }
+      const posX = parseFloat(document.getElementById("posX").value) || 0;
+      const posY = parseFloat(document.getElementById("posY").value) || 0;
+      const posZ = parseFloat(document.getElementById("posZ").value) || 3;
 
-      if (textMesh) {
-        scene.remove(textMesh);
-        textMesh.geometry.dispose();
-      }
+      const rotXdeg = parseFloat(document.getElementById("rotX").value) || 0;
+      const rotYdeg = parseFloat(document.getElementById("rotY").value) || 0;
+      const rotZdeg = parseFloat(document.getElementById("rotZ").value) || 0;
 
-      const loader = new STLLoader();
+      const rotX = THREE.MathUtils.degToRad(rotXdeg);
+      const rotY = THREE.MathUtils.degToRad(rotYdeg);
+      const rotZ = THREE.MathUtils.degToRad(rotZdeg);
 
-      loader.load(
-        designFile,
-        function (geometry) {
-          geometry.center();
+      if (tagMesh) scene.remove(tagMesh);
+      if (textMesh) scene.remove(textMesh);
 
-          const tagMaterial = new THREE.MeshStandardMaterial({
-            color: 0xf2c078,
-            roughness: 0.42,
-            metalness: 0.05
-          });
+      new STLLoader().load(designFile, function (geometry) {
+        geometry.center();
 
-          tagMesh = new THREE.Mesh(geometry, tagMaterial);
-          tagMesh.rotation.x = -Math.PI / 2;
-          scene.add(tagMesh);
+        tagMesh = new THREE.Mesh(
+          geometry,
+          new THREE.MeshStandardMaterial({ color: 0xf2c078 })
+        );
 
-          const textGeometry = new TextGeometry(dogName, {
-            font: font,
-            size: textSize,
-            height: textHeight,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.15,
-            bevelSize: 0.08,
-            bevelSegments: 2
-          });
+        tagMesh.rotation.x = -Math.PI / 2;
+        scene.add(tagMesh);
 
-          textGeometry.center();
+        const textGeometry = new TextGeometry(dogName, {
+          font: font,
+          size: textSize,
+          height: 1.8,
+          curveSegments: 12,
+          bevelEnabled: true,
+          bevelThickness: 0.15,
+          bevelSize: 0.08,
+          bevelSegments: 2
+        });
 
-          const textMaterial = new THREE.MeshStandardMaterial({
-            color: 0x5a3217,
-            roughness: 0.35,
-            metalness: 0.05
-          });
+        textGeometry.center();
 
-          textMesh = new THREE.Mesh(textGeometry, textMaterial);
-          textMesh.position.set(0, textY, 3);
+        textMesh = new THREE.Mesh(
+          textGeometry,
+          new THREE.MeshStandardMaterial({ color: 0x5a3217 })
+        );
 
-          textMesh.rotation.x = Math.PI / 2;
-          textMesh.rotation.z = Math.PI;
+        textMesh.position.set(posX, posY, posZ);
+        textMesh.rotation.set(rotX, rotY, rotZ);
 
-          scene.add(textMesh);
+        scene.add(textMesh);
 
-          status.textContent = "Preview klaar 🐾";
-        },
-        undefined,
-        function (error) {
-          status.textContent = "STL kon niet laden. Check of de bestandsnaam exact klopt.";
-          console.error(error);
-        }
-      );
-    }
-
-    function downloadSTL() {
-      if (!tagMesh || !textMesh) {
-        status.textContent = "Maak eerst een preview.";
-        return;
-      }
-
-      const exportScene = new THREE.Scene();
-
-      const tagClone = tagMesh.clone();
-      const textClone = textMesh.clone();
-
-      exportScene.add(tagClone);
-      exportScene.add(textClone);
-
-      const exporter = new STLExporter();
-      const stlString = exporter.parse(exportScene);
-
-      const dogName = document.getElementById("dogName").value.trim() || "dog";
-      const safeName = dogName.replace(/[^a-z0-9]/gi, "_").toLowerCase();
-
-      const blob = new Blob([stlString], { type: "text/plain" });
-      const link = document.createElement("a");
-
-      link.href = URL.createObjectURL(blob);
-      link.download = "doggy-tag-" + safeName + ".stl";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      status.textContent = "STL gedownload ✅";
+        document.getElementById("codeOutput").value =
+`textMesh.position.set(${posX}, ${posY}, ${posZ});
+textMesh.rotation.x = THREE.MathUtils.degToRad(${rotXdeg});
+textMesh.rotation.y = THREE.MathUtils.degToRad(${rotYdeg});
+textMesh.rotation.z = THREE.MathUtils.degToRad(${rotZdeg});`;
+      });
     }
 
     function resizeViewer() {
       const viewer = document.getElementById("viewer");
-
       camera.aspect = viewer.clientWidth / viewer.clientHeight;
       camera.updateProjectionMatrix();
-
       renderer.setSize(viewer.clientWidth, viewer.clientHeight);
     }
 
