@@ -1,70 +1,78 @@
 # 🐶 3D Doggy Tag Creator
 
 <p align="center">
-  <img src="repo-card.png" width="100%">
+<img src="repo-card.png" width="100%">
 </p>
 
 <p align="center">
 
-![Version](https://img.shields.io/badge/version-1.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Made in](https://img.shields.io/badge/Made%20in-The%20Netherlands-red)
-![Three.js](https://img.shields.io/badge/Three.js-r165-black)
+<img src="https://img.shields.io/badge/Version-1.0-2563EB?style=for-the-badge">
+<img src="https://img.shields.io/badge/Status-Stable-22C55E?style=for-the-badge">
+<img src="https://img.shields.io/badge/Made%20in-The%20Netherlands-E53935?style=for-the-badge">
+<img src="https://img.shields.io/badge/Three.js-r165-111827?style=for-the-badge">
+<img src="https://img.shields.io/badge/STL-Exporter-0EA5E9?style=for-the-badge">
 
 </p>
 
-Create professional **3D printable dog tags** directly in your browser.
+---
 
-Simply choose a design, enter a dog name, customize the text and download an STL file ready for 3D printing.
+# 🚀 About
+
+**3D Doggy Tag Creator** is a modern browser-based tool that allows you to create custom dog tags in seconds.
+
+Simply:
+
+- 🦴 Select a design
+- ✏️ Enter your dog's name
+- 🔤 Choose a font
+- 📏 Adjust the text
+- 👀 Preview everything in real-time
+- ⬇️ Download an STL file ready for 3D printing
+
+No software installation required.
 
 ---
 
 # ✨ Features
 
-- 🦴 Multiple dog tag designs
-- ✍️ Custom dog names
-- 🔤 Multiple fonts
-- **Bold** text support
-- 📏 Adjustable text size
-- 📦 Adjustable text thickness
-- 👀 Live 3D preview
-- 🖱️ Rotate & zoom camera
-- ⬇️ Export as STL
-- 🇳🇱 Made in The Netherlands
+✅ Live 3D Preview
+
+✅ Multiple Dog Tag Designs
+
+✅ Adjustable Text Size
+
+✅ Adjustable Text Thickness
+
+✅ Multiple Fonts
+
+✅ Bold Text Support
+
+✅ Automatic Text Scaling
+
+✅ STL Export
+
+✅ Dark UI
+
+✅ Made in The Netherlands 🇳🇱
 
 ---
 
 # 📸 Preview
 
 <p align="center">
-<img src="preview.png" width="900">
+
+<img width="1515" height="927" alt="image" src="https://github.com/user-attachments/assets/3343790f-8ead-4f07-b910-473bb8ccdce0" />
+
+
 </p>
-
----
-
-# 🚀 Getting Started
-
-Clone this repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/3D-Doggy-Tag-Creator.git
-```
-
-Open
-
-```
-index.html
-```
-
-Or use GitHub Pages.
 
 ---
 
 # 📂 Project Structure
 
-```
+```text
 📁 3D-Doggy-Tag-Creator
-│
+
 ├── index.html
 ├── bone-with-rounding.stl
 ├── empty-bone.stl
@@ -78,8 +86,8 @@ Or use GitHub Pages.
 
 # 🛠 Built With
 
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
 - Three.js
 - STLLoader
@@ -88,55 +96,79 @@ Or use GitHub Pages.
 
 ---
 
-# 🎯 Roadmap
+# 📦 Installation
 
-- [x] Live STL Preview
-- [x] STL Download
-- [x] Font Selection
-- [x] Bold Text
-- [x] Automatic Text Scaling
-- [x] Dark UI
-- [ ] More Tag Designs
-- [ ] Engraved Text
-- [ ] Material Colors
+Clone the repository
+
+```bash
+git clone https://github.com/daan-tech1/3D-Doggy-Tag-Creator.git
+```
+
+Open
+
+```text
+index.html
+```
+
+or host it using **GitHub Pages**.
 
 ---
 
-# ❤️ Support
+# 🎯 Roadmap
 
-If you like this project, consider giving it a ⭐ on GitHub.
-
-It really helps!
+- [x] Live Preview
+- [x] STL Download
+- [x] Multiple Fonts
+- [x] Bold Text
+- [x] Automatic Text Scaling
+- [x] Dark Theme
+- [ ] More Dog Tag Designs
+- [ ] Engraved Text
+- [ ] Material Color Picker
+- [ ] Automatic Updates
 
 ---
 
 # 📱 Follow Me
 
-TikTok
+<p align="center">
 
-**@daan_tech1**
+<a href="https://www.tiktok.com/@daan_tech1">
+<img src="https://img.shields.io/badge/TikTok-@daan__tech1-000000?style=for-the-badge&logo=tiktok&logoColor=white">
+</a>
 
-More 3D printing projects coming soon.
+<a href="https://www.twitch.tv/daan_tech1">
+<img src="https://img.shields.io/badge/Twitch-@daan__tech1-9146FF?style=for-the-badge&logo=twitch&logoColor=white">
+</a>
+
+</p>
 
 ---
 
-# ⚠️ Disclaimer
+# ❤️ Support
 
-This project is intended for personal and commercial 3D printing use.
+If you like this project, please consider giving it a ⭐ on GitHub.
 
-Always verify exported STL files before printing.
+It really helps and motivates future updates!
 
 ---
 
 # 🤖 AI Notice
 
-Parts of this project, documentation and promotional images were created with the assistance of AI.
+Some parts of the source code, documentation and promotional artwork were created with the assistance of Artificial Intelligence.
 
 ---
 
 # 📜 License
 
-MIT License
+This project is licensed under the **MIT License**.
 
-Feel free to use, modify and improve this project.
-<img width="1402" height="1122" alt="image" src="https://github.com/user-attachments/assets/ad2ab8ef-f2de-4d73-8753-fed7e1343c32" />
+You are free to use, modify and improve this project.
+
+---
+
+<p align="center">
+
+Made with ❤️ in 🇳🇱 The Netherlands
+
+</p>
