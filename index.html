@@ -65,10 +65,6 @@
       outline: none;
     }
 
-    input:focus, select:focus {
-      border-color: #ff8c42;
-    }
-
     button {
       width: 100%;
       margin-top: 13px;
@@ -88,11 +84,6 @@
     #downloadBtn {
       background: #4caf50;
       color: white;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
     }
 
     #status {
@@ -212,6 +203,37 @@
       secondLight.position.set(-60, 40, 60);
       scene.add(secondLight);
 
+      const grid = new THREE.GridHelper(120, 24);
+      scene.add(grid);
+
+      const axes = new THREE.AxesHelper(50);
+      scene.add(axes);
+
+      const xArrow = new THREE.ArrowHelper(
+        new THREE.Vector3(1, 0, 0),
+        new THREE.Vector3(0, 0, 0),
+        40,
+        0xff0000
+      );
+
+      const yArrow = new THREE.ArrowHelper(
+        new THREE.Vector3(0, 1, 0),
+        new THREE.Vector3(0, 0, 0),
+        40,
+        0x00ff00
+      );
+
+      const zArrow = new THREE.ArrowHelper(
+        new THREE.Vector3(0, 0, 1),
+        new THREE.Vector3(0, 0, 0),
+        40,
+        0x0000ff
+      );
+
+      scene.add(xArrow);
+      scene.add(yArrow);
+      scene.add(zArrow);
+
       new FontLoader().load(
         "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/fonts/helvetiker_regular.typeface.json",
         function (loadedFont) {
@@ -328,7 +350,12 @@
           controls.target.set(0, 0, 0);
           controls.update();
 
-          status.textContent = "Preview klaar 🐾";
+          status.innerHTML =
+            "Preview klaar 🐾<br>" +
+            "Camera: X 0, Y 0, Z 100<br>" +
+            "Tekst: X 0, Y 1.5, Z -0.5<br>" +
+            "Rotatie: X 90°, Y 180°, Z 0°";
+
         },
         undefined,
         function (error) {
