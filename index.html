@@ -294,6 +294,10 @@
 
           textMesh = new THREE.Mesh(textGeometry, textMaterial);
           textMesh.position.set(0, textY, 3);
+
+          textMesh.rotation.x = Math.PI / 2;
+          textMesh.rotation.z = Math.PI;
+
           scene.add(textMesh);
 
           status.textContent = "Preview klaar 🐾";
