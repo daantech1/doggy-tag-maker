@@ -119,7 +119,7 @@ https://daantech1.github.io/doggy-tag-maker/
 - [ ] More Dog Tag Designs
 - [ ] Engraved Text
 - [ ] Material Color Picker
-- [ ] Automatic Updates
+- [ ] Automatic  
 
 ---
 
