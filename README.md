@@ -22,7 +22,7 @@
 
 Simply:
 
-- 🦴 Select a design
+- 🦴 Select a design from the standard designs
 - ✏️ Enter your dog's name
 - 🔤 Choose a font
 - 📏 Adjust the text
